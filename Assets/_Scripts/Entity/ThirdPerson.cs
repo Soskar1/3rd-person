@@ -4,17 +4,19 @@ namespace Core.Entity
 {
     public class ThirdPerson : MonoBehaviour
     {
-        private Transform _transform;
-        private IMovement _movement;
-
         [Header("Movement")]
         [SerializeField] private Input _input;
         [SerializeField] private Jump _jump;
+        private Transform _transform;
+        private IMovement _movement;
 
         [Header("Rotation")]
         [SerializeField] private Transform _camera;
         [SerializeField] private float _turnSmoothTime;
         private float _turnSmoothVelocity;
+
+        [Header("Animation")]
+        [SerializeField] private Animator _animator;
 
         private void Awake()
         {
@@ -35,10 +37,12 @@ namespace Core.Entity
 
                 Vector3 movementDirection = Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
                 _movement.Move(movementDirection.normalized);
+                _animator.SetFloat("Speed", 1);
             }
             else
             {
                 _movement.Move(Vector3.zero);
+                _animator.SetFloat("Speed", 0);
             }
         }
     }
