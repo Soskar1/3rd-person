@@ -29,6 +29,8 @@ namespace Core.Entity
 
         private void FixedUpdate()
         {
+            _animator.SetFloat("Speed", Mathf.Abs(_input.MovementInput.magnitude));
+
             if (_input.MovementInput.magnitude >= 0.1f)
             {
                 float targetAngle = Mathf.Atan2(_input.MovementInput.x, _input.MovementInput.y) * Mathf.Rad2Deg + _camera.eulerAngles.y;
@@ -37,12 +39,10 @@ namespace Core.Entity
 
                 Vector3 movementDirection = Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
                 _movement.Move(movementDirection.normalized);
-                _animator.SetFloat("Speed", 1);
             }
             else
             {
                 _movement.Move(Vector3.zero);
-                _animator.SetFloat("Speed", 0);
             }
         }
     }
