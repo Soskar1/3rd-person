@@ -1,17 +1,22 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Core.Entity
 {
     public class Player : MonoBehaviour
     {
-        //private IMovement _movement;
-        //[SerializeField] private ThirdPerson _person;
-        //[SerializeField] private Input _input;
-        //[SerializeField] private Jump _jump;
+        [SerializeField] private Input _input;
 
-        //private void Awake() => _movement = GetComponent<IMovement>();
-        //private void OnEnable() => _input.Controls.Player.Jump.performed += _jump.TryJump;
-        //private void OnDisable() => _input.Controls.Player.Jump.performed -= _jump.TryJump;
-        //private void FixedUpdate() => _movement.Move(_input.MovementDirection);
+        private void OnEnable()
+        {
+            //_input.Controls.Player.Aim.performed += Aim;
+            //_input.Controls.Player.Aim.canceled += NotAim;
+        }
+
+        private void OnDisable()
+        {
+            //_input.Controls.Player.Aim.performed -= Aim;
+            //_input.Controls.Player.Aim.canceled -= NotAim;
+        }
     }
 }
