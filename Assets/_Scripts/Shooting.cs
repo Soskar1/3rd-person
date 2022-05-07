@@ -20,12 +20,10 @@ namespace Core.Entity
             if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out hit, Mathf.Infinity, _layerMask))
             {
                 bulletInstance.target = hit.point;
-                bulletInstance.hit = true;
             }
             else
             {
                 bulletInstance.target = _cameraTransform.position + _cameraTransform.forward * 25;
-                bulletInstance.hit = false;
             }
         }
     }
