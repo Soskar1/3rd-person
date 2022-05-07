@@ -6,7 +6,6 @@ namespace Core.Entity
     {
         [Header("Movement")]
         [SerializeField] private Input _input;
-        [SerializeField] private Jump _jump;
         private Transform _transform;
         private IMovement _movement;
 
@@ -23,9 +22,6 @@ namespace Core.Entity
             _transform = transform;
             _movement = GetComponent<IMovement>();
         }
-
-        private void OnEnable() => _input.Controls.Player.Jump.performed += _jump.TryJump;
-        private void OnDisable() => _input.Controls.Player.Jump.performed -= _jump.TryJump;
 
         private void FixedUpdate()
         {
