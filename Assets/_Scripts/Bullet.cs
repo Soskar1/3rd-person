@@ -6,22 +6,17 @@ namespace Core
     {
         [SerializeField] private float _speed;
         [SerializeField] private float _lifeTime;
+        [SerializeField] private Rigidbody _rb;
+        private Transform _transform;
 
         public Vector3 target { get; set; }
-        public bool hit { get; set; }
 
         private void OnEnable() => Destroy(gameObject, _lifeTime);
+        private void Awake() => _transform = transform;
 
-        private void Update()
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target, _speed * Time.deltaTime);
-            if (!hit && Vector3.Distance(transform.position, target) < 0.01f)
-            {
-                Destroy(gameObject);
-            }
-        }
+        private void FixedUpdate() => _rb.velocity = _transform.forward * _speed * Time.fixedDeltaTime;
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider collision)
         {
             Destroy(gameObject);
         }

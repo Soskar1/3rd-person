@@ -4,42 +4,56 @@ namespace Core.Entity
 {
     public class ThirdPerson : MonoBehaviour
     {
-        [Header("Movement")]
-        [SerializeField] private Input _input;
-        private Transform _transform;
-        private IMovement _movement;
+        [SerializeField] private float _runSpeed;
+        [SerializeField] private float _walkSpeed;
+        private float _targetSpeed;
 
         [Header("Rotation")]
-        [SerializeField] private Transform _camera;
+        [SerializeField] private Transform _cameraTransform;
         [SerializeField] private float _turnSmoothTime;
+        private float _targetRotation;
         private float _turnSmoothVelocity;
 
-        [Header("Animation")]
-        [SerializeField] private Animator _animator;
+        private Transform _transform;
+        private Vector3 _movementInput;
+        private IMovement _movement;
+
+        private bool _isAiming = true;
 
         private void Awake()
         {
-            _transform = transform;
             _movement = GetComponent<IMovement>();
+            _transform = transform;
         }
 
         private void FixedUpdate()
         {
-            _animator.SetFloat("Speed", Mathf.Abs(_input.MovementInput.magnitude));
+            Move();
+        }
 
-            if (_input.MovementInput.magnitude >= 0.1f)
+        private void Move()
+        {
+            if (_movementInput.magnitude > 0.1f)
             {
-                float targetAngle = Mathf.Atan2(_input.MovementInput.x, _input.MovementInput.y) * Mathf.Rad2Deg + _camera.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(_transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _turnSmoothTime);
-                _transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                _targetSpeed = _isAiming ? _runSpeed : _walkSpeed;
 
-                Vector3 movementDirection = Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
-                _movement.Move(movementDirection.normalized);
+                _targetRotation = Mathf.Atan2(_movementInput.x, _movementInput.y) * Mathf.Rad2Deg + _cameraTransform.eulerAngles.y;
+                float rotation = Mathf.SmoothDampAngle(_transform.eulerAngles.y, _targetRotation, ref _turnSmoothVelocity, _turnSmoothTime);
+
+                if (_isAiming)
+                    _transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
             else
             {
-                _movement.Move(Vector3.zero);
+                _targetSpeed = 0;
             }
+            
+            Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+
+            _movement.Move(targetDirection.normalized * _targetSpeed * Time.fixedDeltaTime);
         }
+
+        public void SetMovementInput(Vector3 newMovementInput) => _movementInput = newMovementInput;
+        public void SetIsAiming(bool newIsAiming) => _isAiming = newIsAiming;
     }
 }
