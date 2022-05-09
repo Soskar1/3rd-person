@@ -6,20 +6,19 @@ namespace Core
     {
         [SerializeField] private float _speed;
         [SerializeField] private float _lifeTime;
+        [SerializeField] private Rigidbody _rb;
+        private Transform _transform;
 
         public Vector3 target { get; set; }
 
         private void OnEnable() => Destroy(gameObject, _lifeTime);
+        private void Awake() => _transform = transform;
 
-        private void Update()
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target, _speed * Time.deltaTime);
-        }
+        private void FixedUpdate() => _rb.velocity = _transform.forward * _speed * Time.fixedDeltaTime;
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.GetComponent<IHittable>() != null)
-                Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

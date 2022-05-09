@@ -8,31 +8,32 @@ namespace Core.Entity
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _aimLayerMask;
 
+        private Vector3 _mouseWorldPosition;
         private bool _isAiming;
+        
         private Transform _transform;
+
+        public Vector3 MouseWorldPosition { get => _mouseWorldPosition; }
 
         private void Awake() => _transform = transform;
 
         private void Update()
         {
-            Vector3 mouseWorldPosition;
-
             Vector2 screenCenterPoint = new Vector2(Screen.width / 2, Screen.height / 2);
             Ray ray = _camera.ScreenPointToRay(screenCenterPoint);
             if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, _aimLayerMask))
-                mouseWorldPosition = raycastHit.point;
+                _mouseWorldPosition = raycastHit.point;
             else
-                mouseWorldPosition = ray.GetPoint(10);
+                _mouseWorldPosition = ray.GetPoint(10);
 
             if (!_isAiming)
                 return;
 
-            Vector3 worldAimTarget = mouseWorldPosition;
+            Vector3 worldAimTarget = _mouseWorldPosition;
             worldAimTarget.y = _transform.position.y;
             Vector3 aimDirection = (worldAimTarget - _transform.position).normalized;
 
             _transform.forward = Vector3.Lerp(_transform.forward, aimDirection, Time.deltaTime * 20f);
-            //_transform.rotation = Quaternion.LookRotation(aimDirection);
         }
 
         public void StartAim()
