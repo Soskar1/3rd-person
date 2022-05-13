@@ -7,7 +7,10 @@ namespace Core.Weapons
         public override void Fire(Vector3 target)
         {
             Vector3 aimDirection = (target - _shotPosition.position).normalized;
-            Instantiate(_bullet, _shotPosition.position, Quaternion.LookRotation(aimDirection, Vector3.up), _parent);
+
+            Bullet bullet = _bulletPool.Pool.GetFreeElement();
+            bullet.transform.position = _shotPosition.position;
+            bullet.transform.rotation = Quaternion.LookRotation(aimDirection, Vector3.up);
         }
     }
 }
