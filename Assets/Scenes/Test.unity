@@ -586,7 +586,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 79063037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 317.50757, y: 1.0700058, z: 298.10306}
+  m_LocalPosition: {x: 317.50793, y: 1.0700058, z: 298.10306}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -867,6 +867,7 @@ GameObject:
   - component: {fileID: 179154016}
   - component: {fileID: 179154015}
   - component: {fileID: 179154014}
+  - component: {fileID: 179154017}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -953,6 +954,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179154012}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &179154017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179154012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5495592f7cdbc754aab6d133e630335f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shotPosition: {fileID: 1670532620}
+  _parent: {fileID: 1806640355}
+  _bullet: {fileID: 9180718895652707941, guid: 76be88ac15edda14f9406224f207ef13, type: 3}
 --- !u!4 &232197931 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 947d6710cbb743842a12b71c3117c439, type: 3}
@@ -1093,7 +1109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381140427}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 317.50757, y: 1.0700058, z: 298.10306}
+  m_LocalPosition: {x: 317.50793, y: 1.0700058, z: 298.10306}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1176,7 +1192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7770993, y: 1}
+    m_SensorSize: {x: 1.7779479, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 1
@@ -1966,10 +1982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aim: {fileID: 742174816}
-  _bullet: {fileID: 9180718895652707941, guid: 76be88ac15edda14f9406224f207ef13, type: 3}
-  _shotPos: {fileID: 1670532620}
-  _cameraTransform: {fileID: 79063040}
-  _parent: {fileID: 1806640355}
+  _activeWeapon: {fileID: 179154017}
 --- !u!114 &742174816
 MonoBehaviour:
   m_ObjectHideFlags: 0
