@@ -19,14 +19,14 @@ namespace Core.Entity
         {
             _input.Controls.Player.Aim.performed += StartAim;
             _input.Controls.Player.Aim.canceled += CancelAim;
-            _input.Controls.Player.Jump.performed += _jump.TryJump;
+            //_input.Controls.Player.Jump.performed += _jump.TryJump;
         }
 
         private void OnDisable()
         {
             _input.Controls.Player.Aim.performed -= StartAim;
             _input.Controls.Player.Aim.canceled -= CancelAim;
-            _input.Controls.Player.Jump.performed -= _jump.TryJump;
+            //_input.Controls.Player.Jump.performed -= _jump.TryJump;
         }
 
         private void Update()
