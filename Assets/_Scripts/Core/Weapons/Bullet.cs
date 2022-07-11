@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Core.Entity;
 
 namespace Core.Weapons
 {
@@ -19,7 +20,11 @@ namespace Core.Weapons
 
         private void OnTriggerEnter(Collider collision)
         {
-            gameObject.SetActive(false);
+            if (collision.GetComponent<Target>() != null)
+            {
+                Destroy(collision.gameObject);
+                Deactivate();
+            }
         }
 
         private IEnumerator LifeRoutine()
